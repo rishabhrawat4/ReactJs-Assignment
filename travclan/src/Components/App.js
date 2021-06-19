@@ -7,10 +7,11 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import merchants from '../Apis/merchants';
 import AppStyles from '../Style/AppStyle'
+import MerchantTable from './MerchantTable';
 
 const App = () => {
 
-  const [data, setData ] = useState(null);
+  const [data, setData ] = useState([]);
 
   const onSearchData = async() => {
     const response = await merchants.get()
@@ -34,6 +35,7 @@ const App = () => {
           </Typography>
         </Toolbar>
       </AppBar>
+      <MerchantTable data={data}/>
     </div>
   )
 }
