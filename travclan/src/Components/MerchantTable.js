@@ -9,11 +9,13 @@ import { Table,
           TableSortLabel,
           Select,
           MenuItem,
+          Avatar,
+          Grid
         } from '@material-ui/core';
 
 import { findHighestBid, findLowestBid } from '../Function/FindBidsPrice';
 import { sortByDecreasing, sortByIncreasing } from "../Function/Sorting";
-
+import { Link } from 'react-router-dom';
 
 const MerchantTable = ({ data }) => {
   const pages = [5];
@@ -81,36 +83,40 @@ const MerchantTable = ({ data }) => {
         <TableBody>
         {
           dataAfterPagging().map(item => (
-            <TableRow key={item.id} onClick={() => console.log(item)}>
-              <TableCell>{item.firstname} {item.lastname}</TableCell>
+            
+            <TableRow key={item.id} component={Link} to={{ pathname: "/details", state: {item: item}}}>
+             
+              <TableCell><Avatar src={item.avatarUrl}></Avatar>{item.firstname} {item.lastname}</TableCell>
+             
               <TableCell>{item.email}</TableCell>
               <TableCell>{item.phone}</TableCell>
               <TableCell>{item.hasPremium ? "Yes" : "No"}</TableCell>
               <TableCell>{bidType === "max" ? findHighestBid(item.bids) : findLowestBid(item.bids)}</TableCell>
+              
             </TableRow>
           ))
         }
       </TableBody>
-      <Select
-        labelId="demo-controlled-open-select-label"
-        id="demo-controlled-open-select"
-        open={open}
-        onClose={handleClose}
-        onOpen={handleOpen}
-        value={bidType}
-        onChange={handleChange}
-      >
-        <MenuItem value="max">Maximum Bids</MenuItem>
-        <MenuItem value="min">Minimum Bids</MenuItem>
-      </Select>
-      <TablePagination
-        rowsPerPageOptions={pages}
-        component="div"
-        page={page}
-        count={data.length}
-        rowsPerPage ={rowsPerPage}
-        onChangePage={handlePageChange}
-      />
+        <Select
+          labelId="demo-controlled-open-select-label"
+          id="demo-controlled-open-select"
+          open={open}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          value={bidType}
+          onChange={handleChange}
+        >
+          <MenuItem value="max">Maximum Bids</MenuItem>
+          <MenuItem value="min">Minimum Bids</MenuItem>
+        </Select>
+        <TablePagination
+          rowsPerPageOptions={pages}
+          component="div"
+          page={page}
+          count={data.length}
+          rowsPerPage ={rowsPerPage}
+          onChangePage={handlePageChange}
+        />
     </Table>
   )
 }

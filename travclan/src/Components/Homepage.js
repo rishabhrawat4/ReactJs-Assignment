@@ -8,10 +8,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import merchants from '../Apis/merchants';
 import AppStyles from '../Style/AppStyle'
 import MerchantTable from './MerchantTable';
-import Detail from './Detail';
-import Homepage from './Homepage';
 
-const App = () => {
+const Homepage = () => {
 
   const [data, setData ] = useState([]);
 
@@ -26,14 +24,20 @@ const App = () => {
 
   const classes = AppStyles();
   return (
-    <Router>
-    
-    <Switch>
-      <Route path="/" exact component={Homepage} />
-      <Route path="/details" component={Detail} />
-    </Switch>
-    </Router>
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            {/* <MenuIcon /> */}
+          </IconButton>
+          <Typography variant="h6" color="inherit">
+            Merchants List
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <MerchantTable data={data}/>
+    </div>
   )
 }
 
-export default App;
+export default Homepage;
